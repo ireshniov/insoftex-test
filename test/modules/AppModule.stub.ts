@@ -1,8 +1,7 @@
 import { Test, TestingModule, TestingModuleBuilder } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import { appBootstrap } from '../../src/app';
-import { AppModule, appModuleMetadata } from '../../src/module/AppModule';
-import { LoggerService } from '../../src/module/common/logger/service/LoggerService';
+import { appModuleMetadata } from '../../src/module/AppModule';
 
 export function createIntegrationTestingModuleBuilder(): TestingModuleBuilder {
   return Test.createTestingModule(appModuleMetadata);
@@ -24,9 +23,8 @@ export const createTestingApp: (
   const moduleFixture: TestingModule = await testingModuleBuilder.compile();
 
   const app: INestApplication = moduleFixture.createNestApplication();
-  const logger: LoggerService = new LoggerService(AppModule.name);
 
-  await appBootstrap(app, logger);
+  await appBootstrap(app);
 
   return app.init();
 };

@@ -9,7 +9,7 @@ async function bootstrap(logger: LoggerService): Promise<INestApplication> {
     logger,
   });
 
-  await appBootstrap(app, logger);
+  await appBootstrap(app);
 
   const port: string = `${process.env.SERVER_PORT}` || '3000';
 
