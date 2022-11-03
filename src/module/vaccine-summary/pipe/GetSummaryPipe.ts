@@ -1,4 +1,8 @@
-import { Injectable, PipeTransform } from '@nestjs/common';
+import {
+  Injectable,
+  InternalServerErrorException,
+  PipeTransform,
+} from '@nestjs/common';
 import {
   SortDirectionEnum,
   VaccineSummaryDto,
@@ -18,11 +22,23 @@ export class GetSummaryPipe
     rangeSize,
     sort,
   }: VaccineSummaryDto): Promise<IGetSummary> {
+    const boundaries: string[] = this.getBoundaries(
+      dateFrom,
+      dateTo,
+      rangeSize,
+    );
+
+    if (boundaries.length < 2) {
+      throw new InternalServerErrorException(
+        'You must specify at least two boundaries',
+      );
+    }
+
     return {
       country: c,
       dateFrom,
       dateTo,
-      boundaries: this.getBoundaries(dateFrom, dateTo, rangeSize),
+      boundaries,
       sort: this.getSort(sort),
     };
   }

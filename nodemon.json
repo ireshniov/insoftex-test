@@ -7,5 +7,5 @@
     "tsconfig.json"
   ],
   "ext": "js,ts",
-  "exec": "npm run start:dev"
+  "exec": "npm run start:ts"
 }

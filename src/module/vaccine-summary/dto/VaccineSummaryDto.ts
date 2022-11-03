@@ -1,13 +1,14 @@
 import {
-  IsDateString,
+  Allow,
   IsEnum,
   IsISO31661Alpha2,
   IsNotEmpty,
-  IsNumber,
+  IsPositive,
   IsString,
   ValidateNested,
 } from 'class-validator';
 import { Transform, TransformFnParams, Type } from 'class-transformer';
+import { IsVaccineSummaryDate } from '../validator/IsVaccineSummaryDate';
 
 export enum SortFieldEnum {
   NUMBER_DOSES_RECEIVED = 'NumberDosesReceived',
@@ -36,17 +37,18 @@ export class VaccineSummaryDto {
   c: string;
 
   @IsNotEmpty()
-  @IsDateString()
-  // @Matches(new RegExp('^\\d{4}-W([1-9]|[1-4][0-9]|5[0-3])$'))
+  @IsVaccineSummaryDate({
+    greaterThanOrEqual: '2020-W53',
+    isBefore: 'dateTo',
+  })
   dateFrom: string;
 
   @IsNotEmpty()
-  // @Matches(new RegExp('^\\d{4}-W([1-9]|[1-4][0-9]|5[0-3])$'))
-  @IsDateString()
+  @IsVaccineSummaryDate({ greaterThanOrEqual: '2020-W53' })
   dateTo: string;
 
   @IsNotEmpty()
-  @IsNumber()
+  @IsPositive()
   @Transform((params: TransformFnParams) => Number(params.value))
   rangeSize: number;
 

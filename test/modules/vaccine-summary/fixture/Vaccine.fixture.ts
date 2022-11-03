@@ -4,11 +4,11 @@ import { IVaccine } from '../../../../src/module/vaccine/interface/IVaccine';
 
 const vaccineDto: IVaccine[] = [];
 
-for (let i = 1; i <= 53; i++) {
-  let YearWeekISO = `2020-W${i}`;
+for (let i = 1; i <= 52; i++) {
+  let YearWeekISO = `2021-W${i}`;
 
   if (i <= 9) {
-    YearWeekISO = `2020-W0${i}`;
+    YearWeekISO = `2021-W0${i}`;
   }
   vaccineDto.push(
     {

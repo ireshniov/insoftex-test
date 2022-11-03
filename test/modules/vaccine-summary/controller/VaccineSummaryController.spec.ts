@@ -47,7 +47,7 @@ describe('VaccineSummaryController', () => {
               property: 'dateFrom',
               children: [],
               constraints: {
-                isDateString: 'dateFrom must be a valid ISO 8601 date string',
+                isVaccineSummaryDate: 'dateFrom is invalid ISO string.',
                 isNotEmpty: 'dateFrom should not be empty',
               },
             },
@@ -55,7 +55,7 @@ describe('VaccineSummaryController', () => {
               property: 'dateTo',
               children: [],
               constraints: {
-                isDateString: 'dateTo must be a valid ISO 8601 date string',
+                isVaccineSummaryDate: 'dateTo is invalid ISO string.',
                 isNotEmpty: 'dateTo should not be empty',
               },
             },
@@ -63,8 +63,7 @@ describe('VaccineSummaryController', () => {
               property: 'rangeSize',
               children: [],
               constraints: {
-                isNumber:
-                  'rangeSize must be a number conforming to the specified constraints',
+                isPositive: 'rangeSize must be a positive number',
                 isNotEmpty: 'rangeSize should not be empty',
               },
             },
@@ -83,7 +82,7 @@ describe('VaccineSummaryController', () => {
     it('Should return 200 with empty result', async (): Promise<any> => {
       return request(app.getHttpServer())
         .get(
-          `/vaccine-summary?c=MD&dateFrom=2020-W01&dateTo=2020-W53&rangeSize=5&sort[0][field]=NumberDosesReceived&sort[0][direction]=descending&sort[1][field]=weekStart&sort[1][direction]=ascending`,
+          `/vaccine-summary?c=MD&dateFrom=2021-W01&dateTo=2021-W52&rangeSize=5&sort[0][field]=NumberDosesReceived&sort[0][direction]=descending&sort[1][field]=weekStart&sort[1][direction]=ascending`,
         )
         .expect(HttpStatus.OK)
         .expect({
@@ -94,64 +93,64 @@ describe('VaccineSummaryController', () => {
     it('Should return 200', async (): Promise<any> => {
       return request(app.getHttpServer())
         .get(
-          `/vaccine-summary?c=AT&dateFrom=2020-W01&dateTo=2020-W53&rangeSize=5&sort[0][field]=NumberDosesReceived&sort[0][direction]=descending&sort[1][field]=weekStart&sort[1][direction]=ascending`,
+          `/vaccine-summary?c=AT&dateFrom=2021-W01&dateTo=2021-W52&rangeSize=5&sort[0][field]=NumberDosesReceived&sort[0][direction]=descending&sort[1][field]=weekStart&sort[1][direction]=ascending`,
         )
         .expect(HttpStatus.OK)
         .expect({
           summary: [
             {
-              weekStart: '2020-W46',
-              weekEnd: '2020-W51',
+              weekStart: '2021-W46',
+              weekEnd: '2021-W51',
               NumberDosesReceived: 72000000,
             },
             {
-              weekStart: '2020-W41',
-              weekEnd: '2020-W46',
+              weekStart: '2021-W41',
+              weekEnd: '2021-W46',
               NumberDosesReceived: 64500000,
             },
             {
-              weekStart: '2020-W36',
-              weekEnd: '2020-W41',
+              weekStart: '2021-W36',
+              weekEnd: '2021-W41',
               NumberDosesReceived: 57000000,
             },
             {
-              weekStart: '2020-W31',
-              weekEnd: '2020-W36',
+              weekStart: '2021-W31',
+              weekEnd: '2021-W36',
               NumberDosesReceived: 49500000,
             },
             {
-              weekStart: '2020-W26',
-              weekEnd: '2020-W31',
+              weekStart: '2021-W26',
+              weekEnd: '2021-W31',
               NumberDosesReceived: 42000000,
             },
             {
-              weekStart: '2020-W21',
-              weekEnd: '2020-W26',
+              weekStart: '2021-W21',
+              weekEnd: '2021-W26',
               NumberDosesReceived: 34500000,
             },
             {
-              weekStart: '2020-W51',
-              weekEnd: '2020-W53',
-              NumberDosesReceived: 30900000,
-            },
-            {
-              weekStart: '2020-W16',
-              weekEnd: '2020-W21',
+              weekStart: '2021-W16',
+              weekEnd: '2021-W21',
               NumberDosesReceived: 27000000,
             },
             {
-              weekStart: '2020-W11',
-              weekEnd: '2020-W16',
+              weekStart: '2021-W11',
+              weekEnd: '2021-W16',
               NumberDosesReceived: 19500000,
             },
             {
-              weekStart: '2020-W06',
-              weekEnd: '2020-W11',
+              weekStart: '2021-W51',
+              weekEnd: '2021-W52',
+              NumberDosesReceived: 15300000,
+            },
+            {
+              weekStart: '2021-W06',
+              weekEnd: '2021-W11',
               NumberDosesReceived: 12000000,
             },
             {
-              weekStart: '2019-W01',
-              weekEnd: '2020-W06',
+              weekStart: '2021-W01',
+              weekEnd: '2021-W06',
               NumberDosesReceived: 4500000,
             },
           ],
